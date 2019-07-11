@@ -1,19 +1,25 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <table>
-        <tr>
-            <td>ID</td>
-            <th>Sender</th>
-            <th>Recipient</th>
-            <th>Status</th>
-        </tr>
-        {% for message in messages %}
+    {% if messages %}
+        <table>
             <tr>
-                <td>{{ message.id }}</td>
-                <td>{{ message.sender.email }}</td>
-                <td>{{ message.recipientNumber }}</td>
-                <td>{{ message.statusText }}</td>
+                <td>ID</td>
+                <th>Sender</th>
+                <th>Recipient</th>
+                <th>Status</th>
             </tr>
-        {% endfor %}
-    </table>
+            {% for message in messages %}
+                <tr>
+                    <td>{{ message.id }}</td>
+                    <td>{{ message.sender.email }}</td>
+                    <td>{{ message.recipientNumber }}</td>
+                    <td>{{ message.statusText }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {%  else  %}
+        <p>No messages</p>
+    {% endif %}
+
+    <p><a href="/sms/send">Send Message</a></p>
 {% endblock %}
