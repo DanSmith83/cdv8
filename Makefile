@@ -1,10 +1,13 @@
+
+env:
+	cp .env.dist .env
 up:
 	docker-compose up -d
 
 down:
 	docker-compose down
 
-build: up
+first: env up
 
 rebuild: down up
 
