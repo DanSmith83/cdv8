@@ -1,0 +1,8 @@
+sms_form:
+    path: /sms/send
+    controller: App\Controller\SendSMSController
+
+sms_list:
+    path: /sms
+    controller: App\Controller\ListSMSController
+
