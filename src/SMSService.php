@@ -19,6 +19,7 @@ class SMSService {
     }
 
     public function sendMessage($recipientNumber, $message) {
+        $recipientNumber = '+44'.substr($recipientNumber, 1);
         $this->client->messages->create(
             $recipientNumber,
             array(

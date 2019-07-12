@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SMSRepository")
@@ -44,13 +45,19 @@ class SMS
 
     /**
      * @ORM\Column(type="string", length=11)
+     * @Assert\Regex(
+     *     pattern="/^(07)(?:\d\s?){9}$/",
+     *     match=true,
+     *     message="Please supply an eleven digit UK mobile number starting with '07'"
+     * )
      */
     private $recipient_number;
 
     public static $statuses = [
       'UNSENT'  => 1,
       'PENDING' => 2,
-      'SENT'    => 3,
+      'FAILED'  => 3,
+      'SENT'    => 4,
     ];
 
     public function getId(): ?int
@@ -132,7 +139,6 @@ class SMS
 
     public function getRecipientNumber(): ?string
     {
-        //return '';
         return $this->recipient_number;
     }
 

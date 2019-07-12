@@ -27,14 +27,16 @@ class SmsNotificationHandler implements MessageHandlerInterface
     public function __invoke(SmsNotification $message)
     {
         $sms = $this->entityManager->getRepository(\App\Entity\SMS::class)->find($message->getSmsId());
-
+        echo 'Sending message';
         try {
             $this->smsService->sendMessage($sms->getRecipientNumber(), $sms->getText());
             $sms->setStatus(\App\Entity\SMS::$statuses['PENDING']);
-            $this->entityManager->persist($sms);
-            $this->entityManager->flush();
         } catch (\Exception $e) {
-
+            echo $e->getMessage();
+            $sms->setStatus(\App\Entity\SMS::$statuses['FAILED']);
         }
+
+        $this->entityManager->persist($sms);
+        $this->entityManager->flush();
     }
 }
